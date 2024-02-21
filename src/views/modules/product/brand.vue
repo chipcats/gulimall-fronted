@@ -69,7 +69,7 @@
             :src="scope.row.logo"
             fit="fill"
           ></el-image> -->
-          <img :src="scope.row.logo" style="width: 100px; height: 80px">
+          <img :src="scope.row.logo" style="width: 100px; height: 80px" />
         </template>
       </el-table-column>
       <el-table-column
@@ -159,7 +159,7 @@ export default {
   data() {
     return {
       dataForm: {
-        key: "",
+        key: ""
       },
       dataList: [],
       pageIndex: 1,
@@ -167,11 +167,11 @@ export default {
       totalPage: 0,
       dataListLoading: false,
       dataListSelections: [],
-      addOrUpdateVisible: false,
+      addOrUpdateVisible: false
     };
   },
   components: {
-    AddOrUpdate,
+    AddOrUpdate
   },
   activated() {
     this.getDataList();
@@ -186,12 +186,12 @@ export default {
         data: this.$http.adornData(
           { brandId, showStatus: showStatus ? 1 : 0 },
           false
-        ),
+        )
       }).then(({ data }) => {
         console.log("update success");
         this.$message({
           message: "品牌修改成功",
-          type: "success",
+          type: "success"
         });
       });
     },
@@ -204,8 +204,8 @@ export default {
         params: this.$http.adornParams({
           page: this.pageIndex,
           limit: this.pageSize,
-          key: this.dataForm.key,
-        }),
+          key: this.dataForm.key
+        })
       }).then(({ data }) => {
         if (data && data.code === 0) {
           this.dataList = data.page.list;
@@ -243,7 +243,7 @@ export default {
     deleteHandle(id) {
       var ids = id
         ? [id]
-        : this.dataListSelections.map((item) => {
+        : this.dataListSelections.map(item => {
             return item.brandId;
           });
       this.$confirm(
@@ -252,13 +252,13 @@ export default {
         {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning",
+          type: "warning"
         }
       ).then(() => {
         this.$http({
           url: this.$http.adornUrl("/product/brand/delete"),
           method: "post",
-          data: this.$http.adornData(ids, false),
+          data: this.$http.adornData(ids, false)
         }).then(({ data }) => {
           if (data && data.code === 0) {
             this.$message({
@@ -267,14 +267,14 @@ export default {
               duration: 1500,
               onClose: () => {
                 this.getDataList();
-              },
+              }
             });
           } else {
             this.$message.error(data.msg);
           }
         });
       });
-    },
-  },
+    }
+  }
 };
 </script>
