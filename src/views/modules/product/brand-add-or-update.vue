@@ -16,7 +16,7 @@
     </el-form-item>
     <el-form-item label="显示状态[0-不显示；1-显示]" prop="showStatus">
       <el-switch v-model="dataForm.showStatus" active-color="#13ce66" inactive-color="#ff4949"
-      :active-value="1" :inactive-value="0"></el-switch>
+      :active-value="1" :inactive-value="0"></el-switch> 
     </el-form-item>
     <el-form-item label="检索首字母" prop="firstLetter">
       <el-input v-model="dataForm.firstLetter" placeholder="检索首字母"></el-input>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import singleUpload from '../../../components/upload/singleUpload.vue'
+import singleUpload from '@/components/upload/singleUpload.vue'
   export default {
   components: { singleUpload },
     data () {
