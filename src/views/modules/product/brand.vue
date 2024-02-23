@@ -22,8 +22,8 @@
       <el-table-column prop="logo" header-align="center" align="center" label="品牌logo地址">
         <template slot-scope="scope">
           <div class="block">
-            <el-image style="width: 100px; height: 80px" :src="scope.row.logo" fit="fit"></el-image>
-            <!-- <img :src="scope.row.logo" style="width: 100px; height: 80px" /> -->
+            <!-- <el-image style="width: 100px; height: 80px" :src="scope.row.logo" fit="fit"></el-image> -->
+            <img :src="scope.row.logo" style="width: 100px; height: 80px" />
           </div>
         </template>
       </el-table-column>
