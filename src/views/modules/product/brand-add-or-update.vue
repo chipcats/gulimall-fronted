@@ -1,8 +1,8 @@
 <template>
-  <el-dialog :title="!dataForm.brandId ? '新增' : '修改'" :close-on-click-modal="false"
+  <el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false"
     :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm"
-      @keyup.enter.native="dataFormSubmit()" label-width="80px">
+      @keyup.enter.native="dataFormSubmit()" label-width="140px">
       <el-form-item label="品牌名" prop="name">
         <el-input v-model="dataForm.name" placeholder="品牌名"></el-input>
       </el-form-item>
@@ -32,9 +32,9 @@
 </template>
 
 <script>
-import singleUpload from "@/components/upload/singleUpload.vue";
+import SingleUpload from "@/components/upload/singleUpload";
 export default {
-  components: { singleUpload },
+  components: { SingleUpload },
   data() {
     return {
       visible: false,
@@ -43,9 +43,9 @@ export default {
         name: "",
         logo: "",
         descript: "",
-        showStatus: "",
+        showStatus: 1,
         firstLetter: "",
-        sort: "",
+        sort: 0,
       },
       dataRule: {
         name: [{ required: true, message: "品牌名不能为空", trigger: "blur" }],
@@ -63,8 +63,8 @@ export default {
             validator: (rule, value, callback) => {
               if (value == "") {
                 callback(new Error("首字母必须填写"));
-              } else if (!/^[A-Za-z]$/.test(value)) {
-                callback(new Error("首字母只能为一个字母,且必须a-z或者A-Z之间"));
+              } else if (!/^[a-zA-Z]$/.test(value)) {
+                callback(new Error("首字母必须a-z或者A-Z之间"));
               } else {
                 callback();
               }
@@ -78,7 +78,7 @@ export default {
               if (value == "") {
                 callback(new Error("排序字段必须填写"));
               } else if (!Number.isInteger(value) || value < 0) {
-                callback(new Error("排序字段必须是一个大于等于0的整数"));
+                callback(new Error("排序必须是一个大于等于0的整数"));
               } else {
                 callback();
               }

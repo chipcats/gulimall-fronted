@@ -9,10 +9,10 @@
       <span class="custom-tree-node" slot-scope="{ node, data }">
         <span>{{ node.label }}</span>
         <span>
-          <el-button v-if="node.level <= 2" type="text" size="mini"
+          <el-button v-if="node.level <=2" type="text" size="mini"
             @click="() => append(data)">Append</el-button>
           <el-button type="text" size="mini" @click="edit(data)">edit</el-button>
-          <el-button v-if="node.childNodes.length == 0" type="text" size="mini"
+          <el-button v-if="node.childNodes.length==0" type="text" size="mini"
             @click="() => remove(node, data)">Delete</el-button>
         </span>
       </span>
@@ -355,4 +355,5 @@ export default {
   activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 };
 </script>
-<style scoped></style>
+<style scoped>
+</style>
