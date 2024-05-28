@@ -12,10 +12,9 @@
           <el-form-item>
             <el-button @click="getDataList()">查询</el-button>
             <el-button type="success" @click="getAllDataList()">查询全部</el-button>
-            <el-button v-if="isAuth('product:attrgroup:save')" type="primary"
-              @click="addOrUpdateHandle()">新增</el-button>
-            <el-button v-if="isAuth('product:attrgroup:delete')" type="danger"
-              @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+            <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button>
+            <el-button type="danger" @click="deleteHandle()"
+              :disabled="dataListSelections.length <= 0">批量删除</el-button>
           </el-form-item>
         </el-form>
         <el-table :data="dataList" border v-loading="dataListLoading"
@@ -106,7 +105,8 @@ export default {
     },
     //感知树节点被点击
     treenodeclick(data, node, component) {
-      if (node.level == 3) {
+      console.log(node);
+      if (node.level == 3 || node.children == null) {
         this.catId = data.catId;
         this.getDataList(); //重新查询
       }
