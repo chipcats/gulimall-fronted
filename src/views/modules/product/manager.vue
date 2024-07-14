@@ -91,8 +91,8 @@ export default {
       brandIdSub: null,
       dataForm: {
         key: "",
-        brandId: 0,
-        catelogId: 0,
+        brandId: null,
+        catelogId: null,
         price: {
           min: 0,
           max: 0,
@@ -142,8 +142,8 @@ export default {
           key: this.dataForm.key,
           catelogId: this.dataForm.catelogId,
           brandId: this.dataForm.brandId,
-          min: this.dataForm.price.min,
-          max: this.dataForm.price.max,
+          min: this.dataForm.price.min == 0 ? null : this.dataForm.price.min,
+          max: this.dataForm.price.max == 0 ? null : this.dataForm.price.max,
         }),
       }).then(({ data }) => {
         if (data && data.code === 0) {

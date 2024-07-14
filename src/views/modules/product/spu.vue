@@ -49,8 +49,8 @@ export default {
       dataForm: {
         status: "",
         key: "",
-        brandId: 0,
-        catelogId: 0,
+        brandId: null,
+        catelogId: null,
       },
       catPathSub: null,
       brandIdSub: null,
