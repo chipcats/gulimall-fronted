@@ -1,9 +1,7 @@
 <template>
-  <el-dialog
-    title="云存储配置"
-    :close-on-click-modal="false"
-    :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="120px">
+  <el-dialog title="云存储配置" :close-on-click-modal="false" :visible.sync="visible">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm"
+      @keyup.enter.native="dataFormSubmit()" label-width="120px">
       <el-form-item size="mini" label="存储类型">
         <el-radio-group v-model="dataForm.type">
           <el-radio :label="1">七牛</el-radio>
@@ -45,7 +43,8 @@
           <el-input v-model="dataForm.aliyunAccessKeyId" placeholder="阿里云AccessKeyId"></el-input>
         </el-form-item>
         <el-form-item label="AccessKeySecret">
-          <el-input v-model="dataForm.aliyunAccessKeySecret" placeholder="阿里云AccessKeySecret"></el-input>
+          <el-input v-model="dataForm.aliyunAccessKeySecret"
+            placeholder="阿里云AccessKeySecret"></el-input>
         </el-form-item>
         <el-form-item label="BucketName">
           <el-input v-model="dataForm.aliyunBucketName" placeholder="阿里云BucketName"></el-input>
@@ -71,7 +70,8 @@
           <el-input v-model="dataForm.qcloudBucketName" placeholder="腾讯云BucketName"></el-input>
         </el-form-item>
         <el-form-item label="Bucket所属地区">
-          <el-input v-model="dataForm.qcloudRegion" placeholder="如：sh（可选值 ，华南：gz 华北：tj 华东：sh）"></el-input>
+          <el-input v-model="dataForm.qcloudRegion"
+            placeholder="如：sh（可选值 ，华南：gz 华北：tj 华东：sh）"></el-input>
         </el-form-item>
       </template>
     </el-form>
@@ -83,51 +83,51 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        visible: false,
-        dataForm: {},
-        dataRule: {}
-      }
+export default {
+  data() {
+    return {
+      visible: false,
+      dataForm: {},
+      dataRule: {},
+    };
+  },
+  methods: {
+    init(id) {
+      this.visible = true;
+      this.$http({
+        url: this.$http.adornUrl("/sys/oss/config"),
+        method: "get",
+        params: this.$http.adornParams(),
+      }).then(({ data }) => {
+        this.dataForm = data && data.code === 0 ? data.config : [];
+      });
     },
-    methods: {
-      init (id) {
-        this.visible = true
-        this.$http({
-          url: this.$http.adornUrl('/sys/oss/config'),
-          method: 'get',
-          params: this.$http.adornParams()
-        }).then(({data}) => {
-          this.dataForm = data && data.code === 0 ? data.config : []
-        })
-      },
-      // 表单提交
-      dataFormSubmit () {
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            this.$http({
-              url: this.$http.adornUrl('/sys/oss/saveConfig'),
-              method: 'post',
-              data: this.$http.adornData(this.dataForm)
-            }).then(({data}) => {
-              if (data && data.code === 0) {
-                this.$message({
-                  message: '操作成功',
-                  type: 'success',
-                  duration: 1500,
-                  onClose: () => {
-                    this.visible = false
-                  }
-                })
-              } else {
-                this.$message.error(data.msg)
-              }
-            })
-          }
-        })
-      }
-    }
-  }
+    // 表单提交
+    dataFormSubmit() {
+      this.$refs["dataForm"].validate((valid) => {
+        if (valid) {
+          this.$http({
+            url: this.$http.adornUrl("/sys/oss/saveConfig"),
+            method: "post",
+            data: this.$http.adornData(this.dataForm),
+          }).then(({ data }) => {
+            if (data && data.code === 0) {
+              this.$message({
+                message: "操作成功",
+                type: "success",
+                duration: 1500,
+                onClose: () => {
+                  this.visible = false;
+                },
+              });
+            } else {
+              this.$message.error(data.msg);
+            }
+          });
+        }
+      });
+    },
+  },
+};
 </script>
 

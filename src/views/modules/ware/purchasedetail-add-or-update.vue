@@ -1,16 +1,8 @@
 <template>
-  <el-dialog
-    :title="!dataForm.id ? '新增' : '修改'"
-    :close-on-click-modal="false"
-    :visible.sync="visible"
-  >
-    <el-form
-      :model="dataForm"
-      :rules="dataRule"
-      ref="dataForm"
-      @keyup.enter.native="dataFormSubmit()"
-      label-width="120px"
-    >
+  <el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false"
+    :visible.sync="visible">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm"
+      @keyup.enter.native="dataFormSubmit()" label-width="120px">
       <el-form-item label="采购商品id" prop="skuId">
         <el-input v-model="dataForm.skuId" placeholder="采购商品id"></el-input>
       </el-form-item>
@@ -53,20 +45,16 @@ export default {
         skuNum: "",
         skuPrice: "",
         wareId: "",
-        status: 0
+        status: 0,
       },
       dataRule: {
-        skuId: [
-          { required: true, message: "采购商品id不能为空", trigger: "blur" }
-        ],
-        skuNum: [
-          { required: true, message: "采购数量不能为空", trigger: "blur" }
-        ],
-        wareId: [{ required: true, message: "仓库id不能为空", trigger: "blur" }]
-      }
+        skuId: [{ required: true, message: "采购商品id不能为空", trigger: "blur" }],
+        skuNum: [{ required: true, message: "采购数量不能为空", trigger: "blur" }],
+        wareId: [{ required: true, message: "仓库id不能为空", trigger: "blur" }],
+      },
     };
   },
-  created(){
+  created() {
     this.getWares();
   },
   methods: {
@@ -76,8 +64,8 @@ export default {
         method: "get",
         params: this.$http.adornParams({
           page: 1,
-          limit: 500
-        })
+          limit: 500,
+        }),
       }).then(({ data }) => {
         this.wareList = data.page.list;
       });
@@ -89,11 +77,9 @@ export default {
         this.$refs["dataForm"].resetFields();
         if (this.dataForm.id) {
           this.$http({
-            url: this.$http.adornUrl(
-              `/ware/purchasedetail/info/${this.dataForm.id}`
-            ),
+            url: this.$http.adornUrl(`/ware/purchasedetail/info/${this.dataForm.id}`),
             method: "get",
-            params: this.$http.adornParams()
+            params: this.$http.adornParams(),
           }).then(({ data }) => {
             if (data && data.code === 0) {
               this.dataForm.purchaseId = data.purchaseDetail.purchaseId;
@@ -109,7 +95,7 @@ export default {
     },
     // 表单提交
     dataFormSubmit() {
-      this.$refs["dataForm"].validate(valid => {
+      this.$refs["dataForm"].validate((valid) => {
         if (valid) {
           this.$http({
             url: this.$http.adornUrl(
@@ -123,8 +109,8 @@ export default {
               skuNum: this.dataForm.skuNum,
               skuPrice: this.dataForm.skuPrice,
               wareId: this.dataForm.wareId,
-              status: this.dataForm.status
-            })
+              status: this.dataForm.status,
+            }),
           }).then(({ data }) => {
             if (data && data.code === 0) {
               this.$message({
@@ -134,7 +120,7 @@ export default {
                 onClose: () => {
                   this.visible = false;
                   this.$emit("refreshDataList");
-                }
+                },
               });
             } else {
               this.$message.error(data.msg);
@@ -142,7 +128,7 @@ export default {
           });
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
